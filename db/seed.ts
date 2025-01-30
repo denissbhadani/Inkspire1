@@ -1,21 +1,19 @@
 import { PrismaClient } from '@prisma/client';
 import sampleData from './sample-data'; // assuming your data is saved in a file named sampleData.js
 
-const prisma = new PrismaClient();
 
 async function main() {
-  for (const product of sampleData.products) {
-    await prisma.product.create({
-      data: product,
-    });
-  }
+  const prisma = new PrismaClient();
+  await prisma.product.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.verificationToken.deleteMany();
+  await prisma.user.deleteMany();
+
+  await prisma.product.createMany({ data: sampleData.products });
+  await prisma.user.createMany({ data: sampleData.users });
+
   console.log('Sample data seeded successfully');
 }
 
-main()
-  .catch(e => {
-    console.error(e);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main();
