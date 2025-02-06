@@ -21,7 +21,7 @@ const sampleData = {
       slug: 'the-mountain-is-you',
       category: 'Self-Help',
       images: [
-        '/images/sample-products/the-mountain-is-you-1.jpg',
+        '/images/sample-products/absalom-absalom.jpg',
         '/images/sample-products/the-mountain-is-you-2.jpg'
       ],
       author: 'Brianna Wiest', // Single string for author
@@ -39,7 +39,7 @@ const sampleData = {
       slug: 'the-power-of-your-subconscious-mind',
       category: 'Psychology',
       images: [
-        '/images/sample-products/the-power-of-your-subconscious-mind-1.jpg',
+        '/images/sample-products/',
         '/images/sample-products/the-power-of-your-subconscious-mind-2.jpg'
       ],
       author: 'Dr. Joseph Murphy', // Single string for author
@@ -57,7 +57,7 @@ const sampleData = {
       slug: 'the-art-of-letting-go',
       category: 'Self-Help',
       images: [
-        '/images/sample-products/the-art-of-letting-go-1.jpg',
+        '/images/sample-products/a-Dolls-house.jpg',
         '/images/sample-products/the-art-of-letting-go-2.jpg'
       ],
       author: 'Damon Zahariades', // Single string for author
@@ -75,7 +75,7 @@ const sampleData = {
       slug: 'dont-believe-everything-you-think',
       category: 'Self-Help',
       images: [
-        '/images/sample-products/dont-believe-everything-you-think-1.jpg',
+        '/images/sample-products/a-la-recherche-du-temps-perdu.jpg',
         '/images/sample-products/dont-believe-everything-you-think-2.jpg'
       ],
       author: 'Joseph Nguyen', // Single string for author
@@ -93,7 +93,7 @@ const sampleData = {
       slug: 'read-people-like-a-book',
       category: 'Psychology',
       images: [
-        '/images/sample-products/read-people-like-a-book-1.jpg',
+        '/images/sample-products/anna-karenina.jpg',
         '/images/sample-products/read-people-like-a-book-2.jpg'
       ],
       author: 'Patrick King', // Single string for author
@@ -111,7 +111,7 @@ const sampleData = {
       slug: 'the-5-am-club',
       category: 'Productivity',
       images: [
-        '/images/sample-products/the-5-am-club-1.jpg',
+        '/images/sample-products/berlin-alexanderplatz.jpg',
         '/images/sample-products/the-5-am-club-2.jpg'
       ],
       author: 'Robin Sharma', // Single string for author

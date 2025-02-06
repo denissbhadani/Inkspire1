@@ -56,7 +56,8 @@ export const config = {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async session({ session, user, trigger, token }: any) {
             // Set the user ID from the token
-            session.user.id = token.sub
+            session.user.id = token.sub;
+            console.log(token);
             session.user.role = token.role
             session.user.name = token.name
 
