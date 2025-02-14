@@ -49,7 +49,7 @@ export const cartItemSchema = z.object({
   slug: z.string().min(1, 'Slug is required'),
   qty: z.number().int().nonnegative('Quantity must be a postive number '),
   image: z.string().min(1, 'Image is required'),
-  price : currency
+  price : currency,
 });
 
 export const insertCartSchema = z.object({
@@ -58,7 +58,7 @@ export const insertCartSchema = z.object({
   itemsPrice: currency,
   totalPrice: currency,
   shippingPrice: currency,
-  texPrice: currency,
+  taxPrice: currency,
   sessionCartId: z.string().min(1, 'Session cart id is required'),
   userId: z.string().optional().nullable(),
 });
