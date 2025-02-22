@@ -16,3 +16,11 @@ export const signUpDefaultValues = {
   confirmPassword:'',
 }
 
+
+export const shippingAddressDefaultValues = {
+  fullName: 'denis bhadani',
+  streetAddress: '72,akruti bunglows',
+  city: 'anytown',
+  postalCode: '342001',
+  country: 'india'
+}
