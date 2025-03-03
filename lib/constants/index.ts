@@ -18,9 +18,13 @@ export const signUpDefaultValues = {
 
 
 export const shippingAddressDefaultValues = {
-  fullName: 'denis bhadani',
-  streetAddress: '72,akruti bunglows',
-  city: 'anytown',
-  postalCode: '342001',
-  country: 'india'
+  fullName: '',
+  streetAddress: '',
+  city: '',
+  postalCode: '',
+  country: '',
 }
+
+export const PAYMENT_METHODS = process.env.PAYMENT_METHODS ? process.env.PAYMENT_METHODS.split(',') : ['PayPal', 'Stripe', 'Cash On Delivery'];
+
+export const DEFAULT_PAYMENT_METHOD = process.env.DEFAULT_PAYMENT_METHOD || 'PayPal';
