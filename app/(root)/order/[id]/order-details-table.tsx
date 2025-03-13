@@ -24,10 +24,8 @@ import {
 import {
   createPayPalOrder,
   approvePayPalOrder,
-  updateOrderToPaidCOD,
-  deliverOrder,
+ 
 } from '@/lib/actions/order.actions';
-import StripePayment from './stripe-payment';
 
 const OrderDetailsTable = ({
   order,
@@ -91,53 +89,8 @@ const OrderDetailsTable = ({
     });
   };
 
-  // Button to mark order as paid
-  const MarkAsPaidButton = () => {
-    const [isPending, startTransition] = useTransition();
-    const { toast } = useToast();
 
-    return (
-      <Button
-        type='button'
-        disabled={isPending}
-        onClick={() =>
-          startTransition(async () => {
-            const res = await updateOrderToPaidCOD(order.id);
-            toast({
-              variant: res.success ? 'default' : 'destructive',
-              description: res.message,
-            });
-          })
-        }
-      >
-        {isPending ? 'processing...' : 'Mark As Paid'}
-      </Button>
-    );
-  };
-
-  // Button to mark order as delivered
-  const MarkAsDeliveredButton = () => {
-    const [isPending, startTransition] = useTransition();
-    const { toast } = useToast();
-
-    return (
-      <Button
-        type='button'
-        disabled={isPending}
-        onClick={() =>
-          startTransition(async () => {
-            const res = await deliverOrder(order.id);
-            toast({
-              variant: res.success ? 'default' : 'destructive',
-              description: res.message,
-            });
-          })
-        }
-      >
-        {isPending ? 'processing...' : 'Mark As Delivered'}
-      </Button>
-    );
-  };
+ 
 
   return (
     <>
@@ -205,7 +158,7 @@ const OrderDetailsTable = ({
                       <TableCell>
                         <span className='px-2'>{item.qty}</span>
                       </TableCell>
-                      <TableCell className='text-right'>
+                      <TableCell>
                         ${item.price}
                       </TableCell>
                     </TableRow>
@@ -248,20 +201,6 @@ const OrderDetailsTable = ({
                 </div>
               )}
 
-              {/* Stripe Payment */}
-              {!isPaid && paymentMethod === 'Stripe' && stripeClientSecret && (
-                <StripePayment
-                  priceInCents={Number(order.totalPrice) * 100}
-                  orderId={order.id}
-                  clientSecret={stripeClientSecret}
-                />
-              )}
-
-              {/* Cash On Delivery */}
-              {isAdmin && !isPaid && paymentMethod === 'CashOnDelivery' && (
-                <MarkAsPaidButton />
-              )}
-              {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
             </CardContent>
           </Card>
         </div>
@@ -270,4 +209,4 @@ const OrderDetailsTable = ({
   );
 };
 
-export default OrderDetailsTable; 
+export default OrderDetailsTable;
