@@ -24,6 +24,8 @@ import {
 import {
   createPayPalOrder,
   approvePayPalOrder,
+  updateOrderToPaidCOD,
+  deliverOrder,
  
 } from '@/lib/actions/order.actions';
 
@@ -31,12 +33,12 @@ const OrderDetailsTable = ({
   order,
   paypalClientId,
   isAdmin,
-  stripeClientSecret,
+  
 }: {
   order: Omit<Order, 'paymentResult'>;
   paypalClientId: string;
   isAdmin: boolean;
-  stripeClientSecret: string | null;
+  
 }) => {
   const {
     id,
@@ -90,7 +92,54 @@ const OrderDetailsTable = ({
   };
 
 
- 
+   // Button to mark order as paid
+   const MarkAsPaidButton = () => {
+    const [isPending, startTransition] = useTransition();
+    const { toast } = useToast();
+
+    return (
+      <Button
+        type='button'
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await updateOrderToPaidCOD(order.id);
+            toast({
+              variant: res.success ? 'default' : 'destructive',
+              description: res.message,
+            });
+          })
+        }
+      >
+        {isPending ? 'processing...' : 'Mark As Paid'}
+      </Button>
+    );
+  };
+  
+
+  // Button to mark order as delivered
+  const MarkAsDeliveredButton = () => {
+    const [isPending, startTransition] = useTransition();
+    const { toast } = useToast();
+
+    return (
+      <Button
+        type='button'
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await deliverOrder(order.id);
+            toast({
+              variant: res.success ? 'default' : 'destructive',
+              description: res.message,
+            });
+          })
+        }
+      >
+        {isPending ? 'processing...' : 'Mark As Delivered'}
+      </Button>
+    );
+  };
 
   return (
     <>
@@ -201,6 +250,13 @@ const OrderDetailsTable = ({
                 </div>
               )}
 
+
+              
+              {/* Cash On Delivery */}
+              {isAdmin && !isPaid && paymentMethod === 'CashOnDelivery' && (
+                <MarkAsPaidButton />
+              )}
+              {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
             </CardContent>
           </Card>
         </div>
