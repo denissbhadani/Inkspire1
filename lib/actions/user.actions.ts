@@ -1,24 +1,18 @@
 'use server';
 
-import {
-  shippingAddressSchema,
-  signInFormSchema,
-  signUpFormSchema,
-  paymentMethodSchema,
-  updateUserSchema,
-} from '../validators';
-import { auth, signIn, signOut } from '@/auth';
-import { isRedirectError } from 'next/dist/client/components/redirect';
-import { hash } from '../encrypt';
-import { prisma } from '@/db/prisma';
-import { formatError } from '../utils';
-import { ShippingAddress } from '@/types';
-import { z } from 'zod';
-import { PAGE_SIZE } from '../constants';
-import { revalidatePath } from 'next/cache';
-import { Prisma } from '@prisma/client';
-import { getMyCart } from './cart.actions';
-
+import { shippingAddressSchema, signInFormSchema,signUpFormSchema,paymentMethodSchema, updateUserSchema } from "../validators";
+import { auth, signIn, signOut } from "@/auth";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { hashSync } from "bcrypt-ts-edge";
+import { prisma } from "@/db/prisma";
+import { use } from "react";
+import { object, z } from "zod";
+import { formatError } from "../utils";
+import { ShippingAddress } from "@/types";
+import { hash } from "../encrypt";
+import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
+import { PAGE_SIZE } from "../constants";
 // Sign in the user with credentials
 export async function signInWithCredentials(
   prevState: unknown,
@@ -40,19 +34,12 @@ export async function signInWithCredentials(
     return { success: false, message: 'Invalid email or password' };
   }
 }
-
-// Sign user out
+  
+/// sign user out
 export async function signOutUser() {
-  // get current users cart and delete it so it does not persist to next user
-  const currentCart = await getMyCart();
-
-  if (currentCart?.id) {
-    await prisma.cart.delete({ where: { id: currentCart.id } });
-  } else {
-    console.warn('No cart found for deletion.');
-  }
   await signOut();
 }
+
 
 // Sign up user
 export async function signUpUser(prevState: unknown, formData: FormData) {
@@ -90,16 +77,19 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
   }
 }
 
-// Get user by the ID
+
+
+//Get uset by the Id
 export async function getUserById(userId: string) {
   const user = await prisma.user.findFirst({
-    where: { id: userId },
-  });
-  if (!user) throw new Error('User not found');
-  return user;
+      where: { id: userId }
+  })
+
+  if (!user) throw new Error('User not found')
+  return user
 }
 
-// Update the user's address
+//Update the user's address
 export async function updateUserAddress(data: ShippingAddress) {
   try {
     const session = await auth();
@@ -175,7 +165,7 @@ export async function updateProfile(user: { name: string; email: string }) {
         name: user.name,
       },
     });
-
+   
     return {
       success: true,
       message: 'User updated successfully',
