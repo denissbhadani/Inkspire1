@@ -1,5 +1,5 @@
 import Header from "@/components/shared/header";
-import Footer from "@/components/shared/footer/footer";
+import Footer from "@/components/footer";
 export default function RootLayout({
   children,
 }: Readonly<{
